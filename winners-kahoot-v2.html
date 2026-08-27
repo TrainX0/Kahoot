@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Winners × Kahoot — Official Petition</title>
+<style>
+  :root{
+    --bg1:#0a0818;
+    --bg2:#1a1440;
+    --bg3:#0d0b26;
+    --accent:#8b5cf6;
+    --accent2:#22d3ee;
+    --gold:#ffd166;
+    --pink:#ff6b9d;
+    --white:#f8fafc;
+    --muted:#94a3b8;
+    --card:rgba(255,255,255,0.05);
+    --border:rgba(255,255,255,0.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    min-height:100vh;
+    font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(139,92,246,0.25), transparent 45%),
+      radial-gradient(circle at 85% 10%, rgba(34,211,238,0.18), transparent 40%),
+      radial-gradient(circle at 50% 90%, rgba(255,107,157,0.15), transparent 45%),
+      linear-gradient(160deg,var(--bg1),var(--bg3) 60%,var(--bg2));
+    color:var(--white);
+    overflow-x:hidden;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 6vw;
+    background:rgba(10,8,24,0.6);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);
+  }
+  .logo{
+    display:flex;align-items:center;gap:10px;
+    font-weight:900;font-size:1.15rem;letter-spacing:.5px;
+  }
+  .logo span{
+    background:linear-gradient(90deg,var(--gold),var(--pink));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .nav-links{display:flex;gap:32px;font-size:.92rem;color:var(--muted);}
+  .nav-links a{color:var(--muted);text-decoration:none;transition:color .2s;}
+  .nav-links a:hover{color:var(--white);}
+  .nav-cta{
+    padding:10px 20px;border-radius:10px;font-weight:700;font-size:.88rem;
+    background:linear-gradient(135deg,var(--accent2),var(--accent));
+    color:#0a0818;text-decoration:none;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:110px 6vw 90px;
+    display:flex;flex-direction:column;align-items:center;text-align:center;
+    max-width:1100px;margin:0 auto;
+  }
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:8px 20px;border-radius:999px;
+    background:var(--card);border:1px solid var(--border);
+    font-size:13px;letter-spacing:1.5px;text-transform:uppercase;
+    color:var(--gold);margin-bottom:26px;
+  }
+  .pulse{width:8px;height:8px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 rgba(74,222,128,.6);animation:pulse 2s infinite;}
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(74,222,128,.6);}
+    70%{box-shadow:0 0 0 10px rgba(74,222,128,0);}
+    100%{box-shadow:0 0 0 0 rgba(74,222,128,0);}
+  }
+
+  h1{
+    font-size:clamp(2.4rem,6.5vw,4.6rem);
+    font-weight:900;line-height:1.08;margin-bottom:22px;
+  }
+  h1 .grad{
+    background:linear-gradient(90deg,var(--gold),var(--pink),var(--accent2));
+    background-size:200% auto;
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:shine 5s linear infinite;
+  }
+  @keyframes shine{to{background-position:200% center;}}
+
+  .hero p.lead{
+    font-size:clamp(1.05rem,2.2vw,1.35rem);
+    color:var(--muted);max-width:620px;margin-bottom:44px;line-height:1.6;
+  }
+  .hero p.lead b{color:var(--white);}
+
+  .kahoot-emoji{font-size:70px;margin-bottom:20px;animation:bounce 2.4s ease-in-out infinite;}
+  @keyframes bounce{0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-16px) rotate(2deg);}}
+
+  /* ---------- VOTE CARD ---------- */
+  .vote-card{
+    background:linear-gradient(160deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02));
+    border:1px solid var(--border);
+    backdrop-filter:blur(16px);
+    border-radius:28px;
+    padding:48px 36px;
+    max-width:600px;width:100%;
+    box-shadow:0 30px 80px rgba(0,0,0,0.45);
+    position:relative;overflow:hidden;
+  }
+  .vote-card::before{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(120deg,transparent,rgba(255,255,255,0.06),transparent);
+    transform:translateX(-100%);
+    animation:sheen 4s ease-in-out infinite;
+  }
+  @keyframes sheen{
+    0%{transform:translateX(-120%);}
+    50%{transform:translateX(120%);}
+    100%{transform:translateX(120%);}
+  }
+  .vote-question{
+    font-size:clamp(1.4rem,3.5vw,1.9rem);font-weight:800;margin-bottom:8px;
+  }
+  .vote-sub{color:var(--muted);margin-bottom:32px;font-size:.95rem;}
+  .btn-row{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;position:relative;z-index:2;}
+  .btn{
+    padding:19px 40px;font-size:1.15rem;font-weight:800;border:none;border-radius:16px;
+    cursor:pointer;color:#0a0818;text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+    transition:transform .18s ease, box-shadow .18s ease;
+    box-shadow:0 8px 0 rgba(0,0,0,0.25), 0 14px 26px rgba(0,0,0,0.35);
+  }
+  .btn:active{transform:translateY(6px);box-shadow:0 2px 0 rgba(0,0,0,0.25), 0 4px 10px rgba(0,0,0,0.3);}
+  .btn:hover{transform:translateY(-3px);}
+  .btn-yes1{background:linear-gradient(135deg,var(--gold),#ff9f43);}
+  .btn-yes2{background:linear-gradient(135deg,var(--accent2),#38bdf8);}
+  .hint{margin-top:22px;font-size:.85rem;color:var(--muted);font-style:italic;position:relative;z-index:2;}
+
+  /* ---------- SECTION SHARED ---------- */
+  section{padding:90px 6vw;max-width:1100px;margin:0 auto;}
+  .section-tag{
+    text-align:center;color:var(--accent2);font-weight:700;font-size:.85rem;
+    letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;
+  }
+  .section-title{
+    text-align:center;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900;margin-bottom:16px;
+  }
+  .section-desc{
+    text-align:center;color:var(--muted);max-width:600px;margin:0 auto 56px;line-height:1.6;
+  }
+
+  /* ---------- STATS ---------- */
+  .stats{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:20px;
+  }
+  .stat{
+    background:var(--card);border:1px solid var(--border);border-radius:18px;
+    padding:30px 16px;text-align:center;
+  }
+  .stat b{
+    display:block;font-size:clamp(1.8rem,4vw,2.4rem);font-weight:900;
+    background:linear-gradient(90deg,var(--gold),var(--pink));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    margin-bottom:6px;
+  }
+  .stat span{color:var(--muted);font-size:.85rem;}
+
+  /* ---------- FEATURES ---------- */
+  .features{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .feature{
+    background:var(--card);border:1px solid var(--border);border-radius:20px;
+    padding:32px 26px;transition:transform .25s ease, border-color .25s ease;
+  }
+  .feature:hover{transform:translateY(-6px);border-color:rgba(255,255,255,0.3);}
+  .feature .icon{font-size:34px;margin-bottom:16px;}
+  .feature h3{font-size:1.15rem;margin-bottom:10px;}
+  .feature p{color:var(--muted);font-size:.92rem;line-height:1.55;}
+
+  /* ---------- STEPS ---------- */
+  .steps{display:flex;flex-direction:column;gap:18px;}
+  .step{
+    display:flex;gap:22px;align-items:flex-start;
+    background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px 28px;
+  }
+  .step-num{
+    flex:none;width:44px;height:44px;border-radius:12px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.1rem;color:#0a0818;
+  }
+  .step h4{margin-bottom:6px;font-size:1.05rem;}
+  .step p{color:var(--muted);font-size:.92rem;line-height:1.5;}
+
+  /* ---------- TESTIMONIALS ---------- */
+  .testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .testi{
+    background:var(--card);border:1px solid var(--border);border-radius:18px;padding:26px;
+  }
+  .testi .stars{color:var(--gold);margin-bottom:12px;letter-spacing:2px;}
+  .testi p{color:#e2e8f0;font-size:.94rem;line-height:1.55;margin-bottom:16px;font-style:italic;}
+  .testi .who{display:flex;align-items:center;gap:10px;}
+  .avatar{
+    width:36px;height:36px;border-radius:50%;
+    background:linear-gradient(135deg,var(--pink),var(--accent));
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;
+  }
+  .who b{font-size:.88rem;}
+  .who span{display:block;color:var(--muted);font-size:.78rem;}
+
+  /* ---------- FAQ ---------- */
+  .faq-list{display:flex;flex-direction:column;gap:14px;}
+  details{
+    background:var(--card);border:1px solid var(--border);border-radius:16px;
+    padding:20px 24px;transition:background .2s ease, border-color .2s ease;
+  }
+  details:hover{background:rgba(255,255,255,0.08);}
+  details[open]{border-color:rgba(139,92,246,0.5);}
+  summary{
+    cursor:pointer;font-weight:700;font-size:1.02rem;list-style:none;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+  }
+  summary::-webkit-details-marker{display:none;}
+  .plus{
+    flex:none;width:26px;height:26px;border-radius:50%;
+    background:rgba(139,92,246,0.2);display:flex;align-items:center;justify-content:center;
+    font-size:1.1rem;color:var(--accent2);transition:transform .25s ease;
+  }
+  details[open] .plus{transform:rotate(45deg);}
+  details p{margin-top:14px;color:var(--muted);line-height:1.6;font-size:.94rem;}
+
+  /* ---------- FINAL CTA ---------- */
+  .final-cta{
+    text-align:center;padding:100px 6vw;
+    background:linear-gradient(160deg,rgba(139,92,246,0.15),rgba(34,211,238,0.08));
+    border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+    margin:0;max-width:none;
+  }
+  .final-cta h2{font-size:clamp(1.8rem,4.5vw,3rem);font-weight:900;margin-bottom:18px;}
+  .final-cta p{color:var(--muted);max-width:500px;margin:0 auto 36px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    padding:50px 6vw 30px;text-align:center;color:var(--muted);font-size:.85rem;max-width:none;
+  }
+  footer .foot-logo{font-weight:900;color:var(--white);margin-bottom:8px;}
+
+  @media(max-width:900px){
+    .nav-links{display:none;}
+    .stats{grid-template-columns:repeat(2,1fr);}
+    .features{grid-template-columns:1fr;}
+    .testimonials{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">🏆 <span>Winners</span> × Kahoot</div>
+  <div class="nav-links">
+    <a href="#stats">Stats</a>
+    <a href="#why">Why Kahoot</a>
+    <a href="#steps">How it works</a>
+    <a href="#testimonials">Voices</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <a class="nav-cta" href="#vote">Vote now</a>
+</nav>
+
+<section class="hero" id="vote">
+  <div class="badge"><span class="pulse"></span> Live petition · Class: Winners</div>
+  <div class="kahoot-emoji">🎮</div>
+  <h1>The Winners deserve<br><span class="grad">one Kahoot round.</span></h1>
+  <p class="lead">This is a fully democratic, extremely official, 100% legally binding petition asking one simple thing: <b>let the Winners play Kahoot.</b> Cast your vote below.</p>
+
+  <div class="vote-card">
+    <div class="vote-question">Should the Winners play Kahoot today?</div>
+    <div class="vote-sub">Choose your side. Both sides win.</div>
+    <div class="btn-row">
+      <a class="btn btn-yes1" href="https://t.me/sheisGulira?text=Teacher%2C%20may%20we%20play%20Kahoot%3F">✅ Yes</a>
+      <a class="btn btn-yes2" href="https://t.me/sheisGulira?text=Teacher%2C%20may%20we%20play%20Kahoot%3F">✅ Also Yes</a>
+    </div>
+    <div class="hint">(There is no wrong answer. There is only Kahoot.)</div>
+  </div>
+</section>
+
+<section id="stats">
+  <div class="section-tag">By the numbers</div>
+  <div class="section-title">The case is overwhelming</div>
+  <div class="section-desc">We ran the numbers. The numbers agree with us.</div>
+  <div class="stats">
+    <div class="stat"><b>100%</b><span>of Winners support this</span></div>
+    <div class="stat"><b>0</b><span>valid reasons to say no</span></div>
+    <div class="stat"><b>2</b><span>ways to vote Yes</span></div>
+    <div class="stat"><b>∞</b><span>Kahoot energy</span></div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="section-tag">The mission</div>
+  <div class="section-title">Why Kahoot, why now</div>
+  <div class="section-desc">A few compelling, scientifically-adjacent reasons.</div>
+  <div class="features">
+    <div class="feature">
+      <div class="icon">🧠</div>
+      <h3>It's basically studying</h3>
+      <p>Every question is educational. Every point earned is a point toward a smarter class. Trust the process.</p>
+    </div>
+    <div class="feature">
+      <div class="icon">⚡</div>
+      <h3>Instant team spirit</h3>
+      <p>Nothing bonds a class like the collective panic of a 5-second countdown timer.</p>
+    </div>
+    <div class="feature">
+      <div class="icon">🏆</div>
+      <h3>Winners, by name and nature</h3>
+      <p>The class is literally called Winners. Statistically, someone here is about to top the leaderboard.</p>
+    </div>
+  </div>
+</section>
+
+<section id="steps">
+  <div class="section-tag">How it works</div>
+  <div class="section-title">Three easy steps</div>
+  <div class="section-desc">This entire process was designed to take less time than the debate about whether to have it.</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div><h4>Tap "Yes" or "Also Yes"</h4><p>Both are correct. Pick whichever one speaks to your soul.</p></div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div><h4>You'll land in Telegram</h4><p>A chat opens with the teacher, message already written for you.</p></div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div><h4>Hit send</h4><p>The petition is officially submitted. History has been made.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="section-tag">Testimonials</div>
+  <div class="section-title">What people are saying</div>
+  <div class="section-desc">Completely real quotes from completely real Winners.</div>
+  <div class="testimonials">
+    <div class="testi">
+      <div class="stars">★★★★★</div>
+      <p>"I clicked Yes and suddenly I understood the true meaning of democracy."</p>
+      <div class="who"><div class="avatar">A</div><div><b>Anonymous Winner</b><span>Front row, probably</span></div></div>
+    </div>
+    <div class="testi">
+      <div class="stars">★★★★★</div>
+      <p>"Best UX I've seen on a website whose only two options are Yes and Also Yes."</p>
+      <div class="who"><div class="avatar">B</div><div><b>Another Winner</b><span>Back row, definitely</span></div></div>
+    </div>
+    <div class="testi">
+      <div class="stars">★★★★★</div>
+      <p>"10/10, would petition again."</p>
+      <div class="who"><div class="avatar">C</div><div><b>Yet Another Winner</b><span>Somewhere in the middle</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="section-tag">Questions</div>
+  <div class="section-title">Frequently Asked Questions</div>
+  <div class="section-desc">Everything you need to know before casting your vote.</div>
+  <div class="faq-list">
+    <details open>
+      <summary>Why are both buttons "Yes"? <span class="plus">+</span></summary>
+      <p>Because democracy is important, but Kahoot is more important. Everyone gets a choice, and both choices lead to victory.</p>
+    </details>
+    <details>
+      <summary>What happens when I click a button? <span class="plus">+</span></summary>
+      <p>You'll be taken straight to a Telegram chat with a pre-written message: "Teacher, may we play Kahoot?" — all you need to do is press send.</p>
+    </details>
+    <details>
+      <summary>Is this an official request? <span class="plus">+</span></summary>
+      <p>As official as a group of Winners can make it. Consider this the collective voice of the class, formatted very nicely.</p>
+    </details>
+    <details>
+      <summary>What if the teacher says no? <span class="plus">+</span></summary>
+      <p>Statistically unlikely, but not impossible. If it happens, we regroup, recharge, and vote again tomorrow.</p>
+    </details>
+    <details>
+      <summary>Can I vote more than once? <span class="plus">+</span></summary>
+      <p>Technically yes. Democratically questionable, but Kahoot doesn't judge.</p>
+    </details>
+    <details>
+      <summary>Who made this page? <span class="plus">+</span></summary>
+      <p>The Winners. Obviously. Who else would go this far for a quiz game?</p>
+    </details>
+  </div>
+</section>
+
+<div class="final-cta">
+  <h2>Still scrolling? Just vote already.</h2>
+  <p>You've read this far. You clearly care about this cause. Let's make it official.</p>
+  <div class="btn-row">
+    <a class="btn btn-yes1" href="https://t.me/sheisGulira?text=Teacher%2C%20may%20we%20play%20Kahoot%3F">✅ Yes</a>
+    <a class="btn btn-yes2" href="https://t.me/sheisGulira?text=Teacher%2C%20may%20we%20play%20Kahoot%3F">✅ Also Yes</a>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-logo">🏆 Winners × Kahoot</div>
+  <div>Made with chaotic good energy by the Winners.</div>
+</footer>
+
+</body>
+</html>
